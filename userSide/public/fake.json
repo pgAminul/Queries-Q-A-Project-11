@@ -1,0 +1,72 @@
+[
+  {
+    "productName": "Plastic Bottle",
+    "productBrand": "AquaBlue",
+    "productImage": "https://example.com/images/plastic-bottle.jpg",
+    "queryTitle": "Is there an eco-friendly alternative to this product?",
+    "boycottingReason": "The product contributes to plastic pollution in oceans."
+  },
+  {
+    "productName": "Cotton T-Shirt",
+    "productBrand": "GreenWear",
+    "productImage": "https://example.com/images/cotton-tshirt.jpg",
+    "queryTitle": "Can I find a similar T-shirt made with ethical labor?",
+    "boycottingReason": "The brand is accused of using child labor."
+  },
+  {
+    "productName": "Smartphone",
+    "productBrand": "TechNova",
+    "productImage": "https://example.com/images/smartphone.jpg",
+    "queryTitle": "Is there a better smartphone with similar features at a lower price?",
+    "boycottingReason": "The product is overpriced compared to competitors."
+  },
+  {
+    "productName": "Coffee Beans",
+    "productBrand": "BrewFair",
+    "productImage": "https://example.com/images/coffee-beans.jpg",
+    "queryTitle": "Are there fair trade coffee beans that match this quality?",
+    "boycottingReason": "The company does not support fair trade initiatives."
+  },
+  {
+    "productName": "Running Shoes",
+    "productBrand": "FastTrack",
+    "productImage": "https://example.com/images/running-shoes.jpg",
+    "queryTitle": "Can I find durable running shoes at a similar price?",
+    "boycottingReason": "The shoes wear out quickly despite their high cost."
+  },
+  {
+    "productName": "Energy Drink",
+    "productBrand": "PowerBoost",
+    "productImage": "https://example.com/images/energy-drink.jpg",
+    "queryTitle": "Is there a healthier energy drink with the same boost?",
+    "boycottingReason": "The drink contains high sugar levels and harmful additives."
+  },
+  {
+    "productName": "Laptop",
+    "productBrand": "TechLine",
+    "productImage": "https://example.com/images/laptop.jpg",
+    "queryTitle": "Can I get a laptop with similar specs but without restrictions?",
+    "boycottingReason": "The product restricts users from installing third-party software."
+  },
+  {
+    "productName": "Packaged Snacks",
+    "productBrand": "SnackKing",
+    "productImage": "https://example.com/images/packaged-snacks.jpg",
+    "queryTitle": "Is there a better snack option with less packaging waste?",
+    "boycottingReason": "The packaging generates a significant amount of waste."
+  },
+  {
+    "productName": "Detergent Powder",
+    "productBrand": "CleanPro",
+    "productImage": "https://example.com/images/detergent-powder.jpg",
+    "queryTitle": "Are there detergents that clean as effectively but are eco-friendly?",
+    "boycottingReason": "The product contains chemicals harmful to the environment."
+  },
+  {
+    "productName": "Headphones",
+    "productBrand": "SoundX",
+    "productImage": "https://example.com/images/headphones.jpg",
+    "queryTitle": "Can I find headphones with similar sound quality at a lower cost?",
+    "boycottingReason": "The product is overpriced and lacks durability."
+  }
+]
