@@ -8,7 +8,7 @@ import useAuth from "../AuthPorvider/useAuth";
 
 // export default axiosInstance;
 const axiosInstance = axios.create({
-  baseURL: "https://server-side-mocha-kappa.vercel.app",
+  baseURL: "https://queries-one.vercel.app",
   withCredentials: true,
 });
 export default function useAxiosInstance() {

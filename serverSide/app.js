@@ -48,7 +48,7 @@ async function run() {
   try {
     // await client.connect();
     const ProductsRecommendation = client.db("productsRecomedation");
-    const database = ProductsRecommendation.collection("products");
+    const productDatabase = ProductsRecommendation.collection("products");
     const Recommendation = ProductsRecommendation.collection("recommendation");
 
     //  jwt login start here
@@ -110,13 +110,13 @@ async function run() {
 
     app.post("/addQuery", async (req, res) => {
       const product = req.body;
-      const result = await database.insertOne(product);
+      const result = await productDatabase.insertOne(product);
       res.send(result);
     });
 
     app.get("/allData", async (req, res) => {
       try {
-        const data = await database
+        const data = await productDatabase
           .find({})
           .sort({ createdAt: -1 })
           .limit(6)
@@ -133,20 +133,23 @@ async function run() {
       if (req.user.email !== req.params.email) {
         return res.status(403).send("forbidden access");
       }
-      const data = await database
+      const data = await productDatabase
         .find({ userEmail: email })
         .sort({ createdAt: -1 })
         .toArray();
       res.send(data);
     });
     app.get("/allQuery", async (req, res) => {
-      const data = await database.find().sort({ createdAt: -1 }).toArray();
+      const data = await productDatabase
+        .find()
+        .sort({ createdAt: -1 })
+        .toArray();
       res.send(data);
     });
     app.get("/details-query/:id", async (req, res) => {
       const id = req.params.id;
       const findData = { _id: new ObjectId(id) };
-      const data = await database.findOne(findData);
+      const data = await productDatabase.findOne(findData);
       res.send(data);
     });
 
@@ -161,7 +164,7 @@ async function run() {
           $set: body,
         };
 
-        const result = await database.updateOne(updateId, data);
+        const result = await productDatabase.updateOne(updateId, data);
 
         res.status(200).json({ message: "Query updated successfully", result });
       } catch (error) {
@@ -176,7 +179,7 @@ async function run() {
     //   const result = await Recommendation.insertOne(recommendationForm);
 
     //   const id = recommendationForm.previousDataId;
-    //   const data = database.find({ _id: new ObjectId(id) });
+    //   const data = productDatabase.find({ _id: new ObjectId(id) });
     //   let count = 0;
     //   if (data.recommendationCount) {
     //     count = data.recommendationCount + 1;
@@ -190,7 +193,7 @@ async function run() {
     //       recommendationCount: count,
     //     },
     //   };
-    //   const updateResult = await database.updateOne(filter, updateDoc);
+    //   const updateResult = await productDatabase.updateOne(filter, updateDoc);
     //   console.log(updateResult);
     //   res.send(result);
     // });
@@ -222,7 +225,7 @@ async function run() {
           $inc: { recommendationCount: 1 },
         };
 
-        await database.updateOne(filter, updateDoc);
+        await productDatabase.updateOne(filter, updateDoc);
         res.send(result);
       } catch (error) {
         console.error("Error in /add-recommendation:", error.message);
@@ -265,7 +268,10 @@ async function run() {
           const updateDoc = {
             $inc: { recommendationCount: -1 },
           };
-          const updateResult = await database.updateOne(queryFilter, updateDoc);
+          const updateResult = await productDatabase.updateOne(
+            queryFilter,
+            updateDoc
+          );
 
           if (updateResult.modifiedCount === 1) {
             res.status(200).json({
@@ -306,7 +312,7 @@ async function run() {
       const id = req.params.id;
       try {
         const queryId = { _id: new ObjectId(id) };
-        const result = await database.deleteOne(queryId);
+        const result = await productDatabase.deleteOne(queryId);
 
         res.send(result);
       } catch (error) {
