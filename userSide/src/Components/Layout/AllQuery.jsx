@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { FaTh, FaThLarge, FaBars } from "react-icons/fa";
+import { FaTh, FaThLarge, FaBars, FaSort } from "react-icons/fa";
 import useAxiosInstance from "../Axios/AxiosInstance";
 
 export default function AllQuery() {
   const [cards, setCards] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [layout, setLayout] = useState("grid-cols-3");
+  const [sortOrder, setSortOrder] = useState("desc"); // Sorting order state
   const axiosInstance = useAxiosInstance();
 
   useEffect(() => {
@@ -21,8 +22,22 @@ export default function AllQuery() {
     card.productName.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  // Sort function
+  const sortedCards = [...filteredCards].sort((a, b) => {
+    if (sortOrder === "desc") {
+      return b.recommendationCount - a.recommendationCount; // বেশি recommendation আগে
+    } else {
+      return a.recommendationCount - b.recommendationCount; // কম recommendation আগে
+    }
+  });
+
   const handleLayoutChange = (layoutType) => {
     setLayout(layoutType);
+  };
+
+  // Sorting toggle function
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === "desc" ? "asc" : "desc");
   };
 
   return (
@@ -41,55 +56,62 @@ export default function AllQuery() {
           </button>
         </div>
 
-        <div className="flex gap-4 justify-end mb-6">
+        <div className="flex gap-4 justify-between mb-6">
+          {/* Sort Button */}
           <button
-            onClick={() => handleLayoutChange("grid-cols-1")}
-            className={`p-2 rounded-full ${
-              layout === "grid-cols-1" ? "bg-blue-500" : "bg-gray-800"
-            }`}
+            onClick={toggleSortOrder}
+            className="p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 flex items-center gap-2"
           >
-            <FaBars size={20} />
+            <FaSort size={20} />
+            Sort by Recommendation (
+            {sortOrder === "desc" ? "High to Low" : "Low to High"})
           </button>
-          <button
-            onClick={() => handleLayoutChange("grid-cols-2")}
-            className={`p-2 rounded-full ${
-              layout === "grid-cols-2" ? "bg-blue-500" : "bg-gray-800"
-            }`}
-          >
-            <FaThLarge size={20} />
-          </button>
-          <button
-            onClick={() => handleLayoutChange("grid-cols-3")}
-            className={`p-2 rounded-full ${
-              layout === "grid-cols-3" ? "bg-blue-500" : "bg-gray-800"
-            }`}
-          >
-            <FaTh size={20} />
-          </button>
+
+          {/* Layout Change Buttons */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => handleLayoutChange("grid-cols-1")}
+              className={`p-2 rounded-full ${
+                layout === "grid-cols-1" ? "bg-blue-500" : "bg-gray-800"
+              }`}
+            >
+              <FaBars size={20} />
+            </button>
+            <button
+              onClick={() => handleLayoutChange("grid-cols-2")}
+              className={`p-2 rounded-full ${
+                layout === "grid-cols-2" ? "bg-blue-500" : "bg-gray-800"
+              }`}
+            >
+              <FaThLarge size={20} />
+            </button>
+            <button
+              onClick={() => handleLayoutChange("grid-cols-3")}
+              className={`p-2 rounded-full ${
+                layout === "grid-cols-3" ? "bg-blue-500" : "bg-gray-800"
+              }`}
+            >
+              <FaTh size={20} />
+            </button>
+          </div>
         </div>
 
-        {filteredCards.length === 0 ? (
-          <div className=" text-white flex justify-center items-center h-[70vh]">
+        {sortedCards.length === 0 ? (
+          <div className="text-white flex justify-center items-center h-[70vh]">
             No queries found matching "{searchText}"
           </div>
         ) : (
           <div
-            //
-            className={`grid ${layout}  justify-center items-stretch min-h-screen gap-4`}
+            className={`grid ${layout} justify-center items-stretch min-h-screen gap-4`}
           >
-            {filteredCards.map((card) => {
+            {sortedCards.map((card) => {
               const {
                 _id,
                 productName,
-                productBrand,
                 productImage,
                 queryTitle,
-                boycottingReason,
-                userEmail,
-                userName,
-                userImage,
-                createdAt,
                 recommendationCount,
+                createdAt,
               } = card;
 
               const formattedDateTime = new Date(createdAt).toLocaleString();
